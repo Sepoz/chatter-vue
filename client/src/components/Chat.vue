@@ -4,7 +4,11 @@
 
     <div class="message-board">
       <ul class="message-list">
-        <li class="message" v-for="message in calcElapsedTime" :key="message.id">
+        <li
+          class="message"
+          v-for="message in calcElapsedTime"
+          :key="message.id"
+        >
           {{ message.message }} || {{ message.date }} {{ message.timeUnit }}
         </li>
       </ul>
@@ -84,6 +88,8 @@ export default {
 }
 
 .message-board {
+  display: flex;
+  flex-direction: column;
   background-color: rgba(255, 255, 255, 0.2);
   height: 70vh;
   width: 50vw;
@@ -98,8 +104,6 @@ export default {
 }
 
 .message {
-  height: 20px;
-  width: 80%;
   margin: auto;
   padding-left: 5px;
   border: #d4e0e6 solid 1px;
@@ -131,6 +135,7 @@ export default {
   margin: 0;
   border: #d4e0e6 solid 1px;
   border-radius: 10px;
+  box-shadow: 2px 2px 10px grey;
 }
 
 .title {
