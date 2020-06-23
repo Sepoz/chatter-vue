@@ -1,5 +1,7 @@
 # client
 
+Chat test with Vue js
+
 ## Project setup
 ```
 npm install
