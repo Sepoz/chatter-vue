@@ -4,8 +4,8 @@
 
     <div class="message-board">
       <ul class="message-list">
-        <li class="message" v-for="message in mappedMessages" :key="message.id">
-          {{ message.message }} {{ message.date }} seconds ago
+        <li class="message" v-for="message in calcElapsedTime" :key="message.id">
+          {{ message.message }} || {{ message.date }} {{ message.timeUnit }}
         </li>
       </ul>
     </div>
@@ -41,15 +41,35 @@ export default {
     }
   },
   computed: {
-    mappedMessages() {
+    calcElapsedTime() {
       return this.messages.map(message => {
         let messageCreatedAt = message.date;
         let actualDate = Date.now();
         let elapsedTime = Math.floor((actualDate - messageCreatedAt) / 1000);
+        let convertedTime;
+        let unit;
+
+        if (elapsedTime >= 60 && elapsedTime <= 3599) {
+          convertedTime = Math.floor(elapsedTime / 60);
+          unit = "minutes ago";
+        } else if (elapsedTime >= 3600 && elapsedTime <= 86399) {
+          convertedTime = Math.floor(elapsedTime / 3600);
+          unit = "hours ago";
+        } else if (elapsedTime >= 86400 && elapsedTime <= 604799) {
+          convertedTime = Math.floor(elapsedTime / 86400);
+          unit = "days ago";
+        } else if (elapsedTime >= 604800) {
+          convertedTime = messageCreatedAt;
+        } else {
+          convertedTime = elapsedTime;
+          unit = "seconds";
+        }
+
         return {
           message: message.message,
           id: message.id,
-          date: elapsedTime
+          date: convertedTime,
+          timeUnit: unit
         };
       });
     }
