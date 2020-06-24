@@ -4,13 +4,12 @@
 
     <div class="message-board">
       <ul class="message-list">
-        <li
-          class="message"
-          v-for="message in calcElapsedTime"
-          :key="message.id"
-        >
-          {{ message.message }} || {{ message.date }} {{ message.timeUnit }}
-        </li>
+        <template v-for="(post, index) in calcDateFormat">
+          <div class="post" :key="index + 1">
+            <li :key="post.id">{{ post.message }}</li>
+            <li class="message-date" :key="index">{{ post.date }}</li>
+          </div>
+        </template>
       </ul>
     </div>
 
@@ -25,6 +24,8 @@
 </template>
 
 <script>
+import dateFormat from "dateformat";
+
 export default {
   data() {
     return {
@@ -45,35 +46,18 @@ export default {
     }
   },
   computed: {
-    calcElapsedTime() {
+    calcDateFormat() {
       return this.messages.map(message => {
-        let messageCreatedAt = message.date;
-        let actualDate = Date.now();
-        let elapsedTime = Math.floor((actualDate - messageCreatedAt) / 1000);
-        let convertedTime;
-        let unit;
-
-        if (elapsedTime >= 60 && elapsedTime <= 3599) {
-          convertedTime = Math.floor(elapsedTime / 60);
-          unit = "minutes ago";
-        } else if (elapsedTime >= 3600 && elapsedTime <= 86399) {
-          convertedTime = Math.floor(elapsedTime / 3600);
-          unit = "hours ago";
-        } else if (elapsedTime >= 86400 && elapsedTime <= 604799) {
-          convertedTime = Math.floor(elapsedTime / 86400);
-          unit = "days ago";
-        } else if (elapsedTime >= 604800) {
-          convertedTime = messageCreatedAt;
-        } else {
-          convertedTime = elapsedTime;
-          unit = "seconds";
-        }
+        const messageCreatedAt = message.date;
+        const formattedDate = dateFormat(
+          messageCreatedAt,
+          "dddd, mmmm dS, yyyy, h:MM:ss TT"
+        );
 
         return {
           message: message.message,
           id: message.id,
-          date: convertedTime,
-          timeUnit: unit
+          date: formattedDate
         };
       });
     }
@@ -90,36 +74,33 @@ export default {
 .message-board {
   display: flex;
   flex-direction: column;
-  background-color: rgba(255, 255, 255, 0.2);
+  overflow: scroll;
+  background-color: rgba(255, 255, 255, 0.1);
   height: 70vh;
   width: 50vw;
   margin: auto;
   border: #d4e0e6 solid 1px;
   border-radius: 10px;
-  box-shadow: 2px 2px 10px grey;
+  box-shadow: 2px 2px 10px rgb(20, 20, 20);
 }
 
 .message-list {
   padding: 0;
 }
 
-.message {
-  margin: auto;
-  padding-left: 5px;
+.post {
+  color: goldenrod;
   border: #d4e0e6 solid 1px;
   border-radius: 10px;
-  box-shadow: 2px 2px 10px grey;
+  box-shadow: 2px 2px 10px rgb(20, 20, 20);
+  margin: 5px auto;
+  padding-left: 5px;
   list-style-type: none;
 }
 
-.message-response {
-  height: 20px;
-  width: 30%;
-  margin: 5px;
-  text-align: center;
-  border: #d4e0e6 solid 1px;
-  border-radius: 10px;
-  box-shadow: 2px 2px 10px grey;
+.message-date {
+  font-size: 10px;
+  color: rgb(177, 177, 177);
 }
 
 .message-form {
@@ -135,11 +116,12 @@ export default {
   margin: 0;
   border: #d4e0e6 solid 1px;
   border-radius: 10px;
-  box-shadow: 2px 2px 10px grey;
+  box-shadow: 2px 2px 10px rgb(20, 20, 20);
 }
 
 .title {
   margin-top: 0px;
   text-align: center;
+  color: goldenrod;
 }
 </style>

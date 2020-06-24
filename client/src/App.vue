@@ -20,7 +20,7 @@ body {
 }
 
 #app {
-  background-color: #b7b3b2;
+  background-color: #424242;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
