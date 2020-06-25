@@ -120,7 +120,8 @@ export default {
 }
 
 .title {
-  margin-top: 0px;
+  margin-top: 0;
+  margin-bottom: 10px;
   text-align: center;
   color: goldenrod;
 }

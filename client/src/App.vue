@@ -1,18 +1,12 @@
 <template>
   <div id="app">
-    <app-chat></app-chat>
+    <div id="nav">
+      <router-link to="/welcome">Welcome</router-link>
+      <router-link to="/chat">Chat</router-link>
+    </div>
+    <router-view />
   </div>
 </template>
-
-<script>
-import Chat from "./components/Chat.vue";
-export default {
-  name: "App",
-  components: {
-    "app-chat": Chat
-  }
-};
-</script>
 
 <style>
 body {
@@ -20,10 +14,17 @@ body {
 }
 
 #app {
-  background-color: #424242;
+  background-color: #2e2e2e;
+  border: 0px;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+
+#nav {
+  width: 100vw;
+  height: 10vh;
+  text-align: center;
 }
 </style>
